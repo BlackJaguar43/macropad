@@ -29,20 +29,31 @@
   .btn svg { width: 20px; height: 20px; }
   .meta { color: var(--muted); font-size: 14px; margin-top: 14px; }
 
-  /* Pad preview */
+  /* Pad preview: the app's main screen while something plays */
   .phone { margin: 40px auto 0; max-width: 680px; aspect-ratio: 19.5 / 9; border: 1px solid var(--line); border-radius: 28px;
-           padding: 3% 4%; display: grid; grid-template-columns: 1fr 9%; grid-template-rows: auto 1fr 1fr auto; gap: 3% 2.5%; }
-  .head { grid-column: 1 / -1; display: flex; justify-content: space-between; font-size: clamp(10px, 2vw, 14px); color: var(--muted); }
+           padding: 3% 4% 3.5%; display: grid; grid-template-columns: 1fr 11%; grid-template-rows: auto 1fr 1fr auto; gap: 3% 2.5%;
+           font-size: clamp(8px, 1.9vw, 14px); text-align: left; }
+  .phone svg { width: 1.6em; height: 1.6em; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .head { grid-column: 1 / -1; display: flex; align-items: center; gap: 1.2em; color: var(--muted); }
   .head b { color: var(--text); font-weight: 500; }
+  .head .icons { margin-left: auto; margin-right: 11%; display: flex; gap: 1.6em; }
+  .head .icons .on { color: var(--accent); }
   .row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2.5%; }
-  .key { border: 1px solid var(--line); border-radius: 10px; display: grid; place-items: center;
-         font-size: clamp(10px, 2.2vw, 16px); }
+  .key { border: 1px solid var(--line); border-radius: 10px; display: grid; place-items: center; font-size: 1.25em; }
+  .key svg { width: 1.5em; height: 1.5em; }
   .key.fn { color: var(--muted); }
-  .key.play { color: var(--accent); border-color: var(--accent); }
-  .vol { grid-column: 2; grid-row: 2 / 5; border: 1px solid var(--line); border-radius: 10px; position: relative; overflow: hidden; }
-  .vol::after { content: ""; position: absolute; inset: 40% 0 0; background: var(--accent); }
-  .bar { grid-column: 1; display: flex; align-items: center; gap: 2%; font-size: clamp(9px, 1.8vw, 13px); color: var(--muted); }
-  .bar i { flex: 1; height: 4px; border-radius: 2px; background: linear-gradient(to right, var(--accent) 38%, var(--line) 38%); }
+  .vol { grid-column: 2; grid-row: 2 / 4; border-radius: 12px; background: #1B2E4A; position: relative; overflow: hidden; }
+  .vol::after { content: ""; position: absolute; inset: 38% 0 0; background: var(--accent); }
+  .speaker { grid-column: 2; grid-row: 4; display: grid; place-items: center; color: var(--muted); }
+  .now { grid-column: 1; display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 2.5%; align-items: center; }
+  .now .art { grid-row: 1 / 3; width: 3.6em; aspect-ratio: 1; border-radius: 8px; display: grid; place-items: center;
+              background: linear-gradient(135deg, var(--accent), #1F4073); }
+  .now .art::after { content: ""; width: 40%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(#1F4073 22%, #E6F1FB 24%); }
+  .now .info { display: flex; align-items: baseline; gap: .8em; }
+  .now .info b { font-weight: 500; font-size: 1.15em; }
+  .now .info span { color: var(--muted); }
+  .now .info .time { margin-left: auto; }
+  .now i { height: 4px; border-radius: 2px; background: linear-gradient(to right, var(--accent) 40%, #2F4D6B 40%); }
 
   section { padding: 56px 0; border-top: 1px solid var(--line); }
   h2 { font-size: clamp(26px, 4vw, 32px); margin: 0 0 24px; letter-spacing: -0.01em; }
@@ -73,11 +84,29 @@
     <!-- IPHONE-LINK: 아이폰 앱 배포 방법이 정해지면 여기에 설치 링크를 넣습니다. -->
 
     <div class="phone" aria-hidden="true">
-      <div class="head"><span><b>MACro Pad</b></span><span>MacBook Pro</span></div>
+      <div class="head">
+        <b>MACro Pad</b><span>MacBook Pro</span>
+        <span class="icons">
+          <svg class="on" viewBox="0 0 24 24"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1.2 1.2M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1.2-1.2"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 3v12M8 7l4-4 4 4M7 10H5v11h14V10h-2"/></svg>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg>
+        </span>
+      </div>
       <div class="row"><div class="key fn">fn 1</div><div class="key fn">fn 2</div><div class="key fn">fn 3</div><div class="key fn">fn 4</div><div class="key fn">fn 5</div></div>
       <div class="vol"></div>
-      <div class="row"><div class="key">⏮</div><div class="key">-5</div><div class="key play">⏯</div><div class="key">+5</div><div class="key">⏭</div></div>
-      <div class="bar"><span>1:24</span><i></i><span>3:42</span></div>
+      <div class="row">
+        <div class="key"><svg viewBox="0 0 24 24"><path d="M6 5v14M19 5 9 12l10 7z"/></svg></div>
+        <div class="key">-5</div>
+        <div class="key"><svg viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg></div>
+        <div class="key">+5</div>
+        <div class="key"><svg viewBox="0 0 24 24"><path d="M18 5v14M5 5l10 7-10 7z"/></svg></div>
+      </div>
+      <div class="now">
+        <div class="art"></div>
+        <div class="info"><b>Midnight Drive</b><span>Neon Coast</span><span class="time">1:26 / 3:34</span></div>
+        <i></i>
+      </div>
+      <div class="speaker"><svg viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9.5a3.5 3.5 0 0 1 0 5M18 7a7 7 0 0 1 0 10"/></svg></div>
     </div>
   </div>
 </header>

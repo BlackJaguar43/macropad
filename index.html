@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MACro Pad — 아이폰을 Mac 미디어 리모컨으로</title>
+<meta name="description" content="MACro Pad는 남는 아이폰을 Mac의 미디어 조작과 키보드 단축키 전용 패드로 바꿔 주는 무료 앱입니다.">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:title" content="MACro Pad — 아이폰을 Mac 미디어 리모컨으로">
+<meta property="og:description" content="재생, 탐색, 볼륨, 단축키를 아이폰 한 화면에서. 무료.">
+<meta property="og:image" content="https://blackjaguar43.github.io/macropad/icon-512.png">
+<meta property="og:type" content="website">
+<style>
+  :root { --bg: #0B1B2B; --surface: #12263A; --text: #E6F1FB; --muted: #85B7EB; --line: #2F4D6B; --accent: #5DCAA5; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 17px/1.7 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Segoe UI", sans-serif;
+         -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+
+  header.hero { padding: 72px 0 40px; text-align: center; }
+  .hero img { width: 112px; height: 112px; border-radius: 24px; }
+  .hero h1 { font-size: clamp(36px, 7vw, 56px); line-height: 1.1; margin: 22px 0 10px; letter-spacing: -0.02em; }
+  .lead { font-size: clamp(18px, 3vw, 21px); color: var(--muted); margin: 0 auto 30px; max-width: 560px; word-break: keep-all; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; background: var(--accent); color: var(--bg);
+         text-decoration: none; font-weight: 700; font-size: 18px; padding: 15px 30px; border-radius: 14px; }
+  .btn svg { width: 20px; height: 20px; }
+  .meta { color: var(--muted); font-size: 14px; margin-top: 14px; }
+
+  /* Pad preview */
+  .phone { margin: 40px auto 0; max-width: 680px; aspect-ratio: 19.5 / 9; border: 1px solid var(--line); border-radius: 28px;
+           padding: 3% 4%; display: grid; grid-template-columns: 1fr 9%; grid-template-rows: auto 1fr 1fr auto; gap: 3% 2.5%; }
+  .head { grid-column: 1 / -1; display: flex; justify-content: space-between; font-size: clamp(10px, 2vw, 14px); color: var(--muted); }
+  .head b { color: var(--text); font-weight: 500; }
+  .row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2.5%; }
+  .key { border: 1px solid var(--line); border-radius: 10px; display: grid; place-items: center;
+         font-size: clamp(10px, 2.2vw, 16px); }
+  .key.fn { color: var(--muted); }
+  .key.play { color: var(--accent); border-color: var(--accent); }
+  .vol { grid-column: 2; grid-row: 2 / 5; border: 1px solid var(--line); border-radius: 10px; position: relative; overflow: hidden; }
+  .vol::after { content: ""; position: absolute; inset: 40% 0 0; background: var(--accent); }
+  .bar { grid-column: 1; display: flex; align-items: center; gap: 2%; font-size: clamp(9px, 1.8vw, 13px); color: var(--muted); }
+  .bar i { flex: 1; height: 4px; border-radius: 2px; background: linear-gradient(to right, var(--accent) 38%, var(--line) 38%); }
+
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: clamp(26px, 4vw, 32px); margin: 0 0 24px; letter-spacing: -0.01em; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+  .card h3 { margin: 0 0 6px; font-size: 19px; }
+  .card p { margin: 0; color: var(--muted); word-break: keep-all; }
+  .num { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%;
+         background: var(--accent); color: var(--bg); font-weight: 800; font-size: 15px; margin-bottom: 10px; }
+  .note { color: var(--muted); word-break: keep-all; }
+
+  footer { padding: 36px 0 56px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+  footer .links { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 12px; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <img src="icon-512.png" alt="MACro Pad 아이콘">
+    <h1>MACro Pad</h1>
+    <p class="lead">남는 아이폰을 Mac 옆에 세워 두세요.<br>재생, 탐색, 볼륨, 단축키를 버튼 하나로 조작합니다.</p>
+    <a class="btn" href="https://github.com/blackjaguar43/macropad/releases/latest/download/MacroPadHost.dmg">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v13M6 10l6 6 6-6M4 21h16"/></svg>
+      Mac 앱 무료 다운로드
+    </a>
+    <p class="meta">macOS 14 Sonoma 이상 · Apple 실리콘과 Intel Mac 모두 지원 · Apple 공증 완료</p>
+    <!-- IPHONE-LINK: 아이폰 앱 배포 방법이 정해지면 여기에 설치 링크를 넣습니다. -->
+
+    <div class="phone" aria-hidden="true">
+      <div class="head"><span><b>MACro Pad</b></span><span>MacBook Pro</span></div>
+      <div class="row"><div class="key fn">fn 1</div><div class="key fn">fn 2</div><div class="key fn">fn 3</div><div class="key fn">fn 4</div><div class="key fn">fn 5</div></div>
+      <div class="vol"></div>
+      <div class="row"><div class="key">⏮</div><div class="key">-5</div><div class="key play">⏯</div><div class="key">+5</div><div class="key">⏭</div></div>
+      <div class="bar"><span>1:24</span><i></i><span>3:42</span></div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>이런 걸 할 수 있어요</h2>
+    <div class="grid">
+      <div class="card"><h3>미디어 조작</h3><p>Mac에서 재생 중인 미디어를 재생·일시 정지하고, 5초씩 앞뒤로 옮기고, 이전·다음으로 넘겨요. YouTube 쇼츠도 넘길 수 있어요.</p></div>
+      <div class="card"><h3>지금 재생 중</h3><p>제목, 아티스트, 앨범 아트와 재생 위치를 보여 주고, 막대를 끌어 원하는 곳으로 옮겨요.</p></div>
+      <div class="card"><h3>Mac 볼륨</h3><p>오른쪽 세로 막대로 Mac 전체 볼륨을 조절해요.</p></div>
+      <div class="card"><h3>fn 버튼 5개</h3><p>자주 쓰는 키보드 단축키나 Mac 앱을 버튼에 지정해 바로 누르거나 열어요. 누를 때 살짝 진동해요.</p></div>
+      <div class="card"><h3>코드로 안전하게 연결</h3><p>Mac 메뉴 막대의 8자리 코드를 입력한 아이폰만 연결되고, 통신은 암호화돼요. 코드는 직접 정할 수 있고, 여러 번 틀리면 잠시 막혀요.</p></div>
+      <div class="card"><h3>계정과 광고 없음</h3><p>같은 Wi-Fi 안에서만 통신해요. 계정, 광고, 데이터 수집이 없어요.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <div class="wrap">
+    <h2>시작하기</h2>
+    <div class="grid">
+      <div class="card"><span class="num">1</span><h3>Mac 앱 설치</h3><p>내려받은 MacroPadHost.dmg를 열고, MacroPad Host를 응용 프로그램 폴더로 끌어다 놓은 뒤 실행하세요. 메뉴 막대에 아이콘이 나타나요.</p></div>
+      <div class="card"><span class="num">2</span><h3>아이폰 연결</h3><p>아이폰 앱을 열고 Mac과 같은 Wi-Fi에서 로컬 네트워크 권한을 허용한 뒤, Mac 메뉴에 표시된 연결 코드를 입력하세요.</p></div>
+      <div class="card"><span class="num">3</span><h3>단축키 권한</h3><p>fn 버튼을 쓰려면 <strong>시스템 설정 → 개인정보 보호 및 보안 → 손쉬운 사용</strong>에서 MacroPad Host를 켜 주세요.</p></div>
+    </div>
+    <p class="note">재생 정보는 macOS의 비공개 기능으로 읽기 때문에, macOS 업데이트 후 일시적으로 동작하지 않을 수 있어요.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="links">
+      <a href="privacy-policy.html">개인정보 처리방침</a>
+      <a href="https://github.com/blackjaguar43/macropad/releases">모든 버전</a>
+      <a href="https://github.com/blackjaguar43/macropad/issues">문제 신고</a>
+      <a href="https://www.instagram.com/jason_oing/">Instagram</a>
+    </div>
+    <p>© 2026 HAK HYUN LEE. MACro Pad는 Apple과 관련이 없는 독립 앱입니다. Mac, macOS, iPhone은 Apple Inc.의 상표입니다.</p>
+  </div>
+</footer>
+
+</body>
+</html>
